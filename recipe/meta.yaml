@@ -8,9 +8,11 @@ package:
 source:
   url: https://github.com/ebiggers/libdeflate/archive/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:                                          # [win]
+    - patches/0001-don_t_use_bzhi_intrinsics.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('libdeflate', max_pin='x.x') }}
 
@@ -20,6 +22,7 @@ requirements:
     - make  # [unix]
     - cmake
     - ninja  # [win]
+    - m2-patch # [win]
 
 test:
   commands:
