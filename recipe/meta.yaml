@@ -20,7 +20,6 @@ requirements:
     - make  # [unix]
     - cmake
     - ninja-base  # [win]
-    - m2-patch # [win]
 
 test:
   commands:
