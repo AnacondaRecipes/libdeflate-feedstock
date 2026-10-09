@@ -1,13 +1,11 @@
 #!/bin/bash
-set -x
-mkdir build
-cd build
+set -eoux pipefail
 
-cmake ${CMAKE_ARGS} \
+cmake -B build -S . -GNinja ${CMAKE_ARGS} \
+  -DLIBDEFLATE_BUILD_TESTS=ON \
   -DLIBDEFLATE_BUILD_STATIC_LIB=OFF \
-  -DCMAKE_INSTALL_PREFIX=${PREFIX} \
-  ..
+  -DCMAKE_INSTALL_PREFIX=${PREFIX}
 
-make -j ${CPU_COUNT}
-
-make install
+cmake --build build --config Release
+ctest --test-dir build --output-on-failure
+cmake --build build --target install --config Release
